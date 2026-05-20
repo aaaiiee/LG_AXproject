@@ -1,0 +1,52 @@
+tags:
+  - key: wash_performance
+    display_ko: 세척력
+    applies_to: [washer, top_loader]
+
+  - key: spin_performance
+    display_ko: 탈수력
+    applies_to: [washer, top_loader]
+
+  - key: dry_performance
+    display_ko: 건조성능
+    applies_to: [dryer]
+
+  - key: noise
+    display_ko: 소음
+    applies_to: [washer, dryer, top_loader]
+
+  - key: vibration
+    display_ko: 진동
+    applies_to: [washer, top_loader]
+
+  - key: energy_efficiency
+    display_ko: 에너지효율
+    applies_to: [washer, dryer, top_loader]
+
+  - key: after_service
+    display_ko: AS
+    applies_to: [washer, dryer, top_loader]
+
+  - key: durability
+    display_ko: 내구성
+    applies_to: [washer, dryer, top_loader]
+
+  - key: design
+    display_ko: 디자인
+    applies_to: [washer, dryer, top_loader]
+
+  - key: usability
+    display_ko: 사용편의
+    applies_to: [washer, dryer, top_loader]
+
+  - key: value_for_money
+    display_ko: 가격대비
+    applies_to: [washer, dryer, top_loader]
+
+  - key: hygiene_odor
+    display_ko: 냄새·위생
+    applies_to: [washer, dryer, top_loader]
+
+  - key: capacity_satisfaction
+    display_ko: 용량 만족도
+    applies_to: [washer, dryer, top_loader]

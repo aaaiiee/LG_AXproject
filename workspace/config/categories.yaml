@@ -1,0 +1,12 @@
+categories:
+  - id: washer
+    display: 세탁기
+    aliases: [드럼세탁기, 드럼, washer, washing machine]
+
+  - id: dryer
+    display: 건조기
+    aliases: [건조, dryer]
+
+  - id: top_loader
+    display: 통돌이
+    aliases: [통돌이세탁기, 일반세탁기, top loader, top-loader]

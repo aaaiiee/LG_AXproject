@@ -1,0 +1,14 @@
+[
+  {
+    "external_id": "FIX-001",
+    "url": "https://example.test/fixture/FIX-001",
+    "model_name": "픽스처 트롬 24kg",
+    "model_code": "FIX-001"
+  },
+  {
+    "external_id": "FIX-002",
+    "url": "https://example.test/fixture/FIX-002",
+    "model_name": "픽스처 그랑데 25kg",
+    "model_code": "FIX-002"
+  }
+]

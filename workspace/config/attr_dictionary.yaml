@@ -1,0 +1,148 @@
+attributes:
+  - canonical_key: wash_capacity_kg
+    display_ko: 세탁용량
+    unit: kg
+    data_type: number
+    applies_to: [washer, top_loader]
+    synonyms:
+      - 세탁용량
+      - 세탁 용량
+      - 1회 세탁량
+      - 세탁가능량
+      - 표준 세탁 용량
+      - wash capacity
+    value_pattern: '(\d+(?:\.\d+)?)\s*(?:kg|KG|킬로그램|키로|키로그램)'
+
+  - canonical_key: dry_capacity_kg
+    display_ko: 건조용량
+    unit: kg
+    data_type: number
+    applies_to: [dryer]
+    synonyms:
+      - 건조용량
+      - 건조 용량
+      - 1회 건조량
+      - 건조가능량
+      - dry capacity
+    value_pattern: '(\d+(?:\.\d+)?)\s*(?:kg|KG|킬로그램)'
+
+  - canonical_key: spin_rpm
+    display_ko: 탈수 회전수
+    unit: rpm
+    data_type: number
+    applies_to: [washer, top_loader]
+    synonyms:
+      - 회전수
+      - 탈수속도
+      - 탈수 회전수
+      - 최대 회전수
+      - RPM
+      - spin speed
+    value_pattern: '(\d{3,4})\s*(?:rpm|RPM|회전)'
+
+  - canonical_key: noise_db
+    display_ko: 작동 소음
+    unit: dB
+    data_type: number
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - 소음
+      - 작동소음
+      - 운전 소음
+      - 동작 소음
+      - noise level
+    value_pattern: '(\d+(?:\.\d+)?)\s*(?:dB|㏈|데시벨)'
+
+  - canonical_key: energy_grade
+    display_ko: 에너지소비효율등급
+    unit: class
+    data_type: enum
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - 에너지소비효율
+      - 에너지소비효율등급
+      - 에너지등급
+      - 효율등급
+      - energy grade
+    value_pattern: '([1-5])\s*등급'
+    enum_map:
+      "1등급": 1
+      "2등급": 2
+      "3등급": 3
+      "4등급": 4
+      "5등급": 5
+
+  - canonical_key: power_consumption_w
+    display_ko: 소비전력
+    unit: W
+    data_type: number
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - 소비전력
+      - 정격소비전력
+      - power consumption
+    value_pattern: '(\d+(?:,\d{3})*)\s*(?:W|와트|kW)'
+
+  - canonical_key: dimensions_whd_mm
+    display_ko: 외형치수(WxHxD)
+    unit: mm
+    data_type: string
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - 외형치수
+      - 본체크기
+      - 제품크기
+      - 크기
+      - dimensions
+    value_pattern: '(\d+)\s*[x×*]\s*(\d+)\s*[x×*]\s*(\d+)\s*(?:mm|㎜)?'
+
+  - canonical_key: inverter_motor
+    display_ko: 인버터 모터
+    unit: bool
+    data_type: bool
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - 인버터모터
+      - 인버터 모터
+      - DD모터
+      - 다이렉트 드라이브
+      - inverter motor
+
+  - canonical_key: steam
+    display_ko: 스팀 기능
+    unit: bool
+    data_type: bool
+    applies_to: [washer, dryer]
+    synonyms:
+      - 스팀
+      - 트루스팀
+      - 살균스팀
+      - 스팀기능
+      - steam
+
+  - canonical_key: wifi_smart
+    display_ko: WiFi/스마트 기능
+    unit: bool
+    data_type: bool
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - WiFi
+      - 와이파이
+      - ThinQ
+      - 씽큐
+      - SmartThings
+      - 스마트싱스
+      - 스마트홈
+      - 원격제어
+
+  - canonical_key: price_krw
+    display_ko: 가격
+    unit: krw
+    data_type: number
+    applies_to: [washer, dryer, top_loader]
+    synonyms:
+      - 가격
+      - 최저가
+      - 판매가
+      - price
+    value_pattern: '(\d{1,3}(?:,\d{3})+|\d{6,})\s*(?:원|KRW)?'

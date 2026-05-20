@@ -1,0 +1,16 @@
+[
+  {
+    "author_hash": "u-dd44",
+    "rating": 4,
+    "text": "용량이 커서 이불 빨래까지 한 번에 됩니다.",
+    "posted_at": "2026-04-22T11:00:00",
+    "url": "https://example.test/r/4"
+  },
+  {
+    "author_hash": "u-ee55",
+    "rating": 2,
+    "text": "전기 사용량이 생각보다 많네요. 에너지등급 2등급은 좀 아쉽습니다.",
+    "posted_at": "2026-05-05T08:30:00",
+    "url": "https://example.test/r/5"
+  }
+]

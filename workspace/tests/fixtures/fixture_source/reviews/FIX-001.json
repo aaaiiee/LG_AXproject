@@ -1,0 +1,23 @@
+[
+  {
+    "author_hash": "u-aa11",
+    "rating": 5,
+    "text": "세척력 좋고 디자인도 만족합니다. 스팀 살균이 확실히 됩니다.",
+    "posted_at": "2026-05-01T09:00:00",
+    "url": "https://example.test/r/1"
+  },
+  {
+    "author_hash": "u-bb22",
+    "rating": 3,
+    "text": "탈수 시 소음이 조금 큰 편이에요. 그래도 옷은 잘 빨립니다.",
+    "posted_at": "2026-05-08T13:30:00",
+    "url": "https://example.test/r/2"
+  },
+  {
+    "author_hash": "u-cc33",
+    "rating": 4,
+    "text": "AS 한 번 받았는데 빠른 대응이었습니다.",
+    "posted_at": "2026-05-12T20:15:00",
+    "url": "https://example.test/r/3"
+  }
+]
