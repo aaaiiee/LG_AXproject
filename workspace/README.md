@@ -1,87 +1,154 @@
 # lg_dash — 국내 생활가전 비교 대시보드
 
-세탁기 / 건조기 / 통돌이 — 제조사 공식 + 다나와 + 쿠팡/원프라우 + 유튜브/블로그
-4개 소스를 수집해 LLM으로 요약·감성 태그·정규화된 스펙 매칭을 수행하는
-Notion 스타일 사내 비교 대시보드.
+> 세탁기 / 건조기 / 통돌이 — 제조사 공식 + 다나와 + 쿠팡 + 유튜브 4개 소스를 크롤하여 스펙·리뷰를 정규화하고 Streamlit으로 비교/탐색하는 사내용 대시보드.
 
-전체 구현 계획: `~/.claude/plans/frolicking-drifting-plum.md`
+## ⚠️ 사내망 한정
 
-## 사용 범위 고지 (Internal Use Only)
+이 도구는 **사내 의사결정 지원용**이며 외부 공개를 가정하지 않습니다. 저작권(이미지/스펙/리뷰) 및 LLM API 비용 노출 위험이 있어 외부 URL로 라우팅하지 마세요. 사내망 노출 패턴은 [docs/05-ops/DEPLOY.md](docs/05-ops/DEPLOY.md) 참조.
 
-이 도구는 **사내/팀 내부 의사결정 지원 목적**으로만 사용한다.
+---
 
-- 수집·캐싱한 이미지·텍스트는 외부 공개·재배포·상업적 이용을 금한다.
-- 각 소스의 robots.txt 및 이용약관을 존중한다.
-- Streamlit 서버는 사내망(localhost 또는 VPN) 한정으로 운영한다.
-- 저작권·초상권·개인정보 침해 우려가 있는 데이터는 즉시 제거한다.
+## What
 
-## 요구 사항
+- **수집**: 4 소스 어댑터 (`manufacturer / danawa / coupang / youtube`)에서 스펙·이미지·리뷰 크롤
+- **정규화**: 사전 기반 rule → fuzzy → LLM 폴백 3단계 매칭, confidence + matched_by 추적
+- **요약**: Anthropic Claude Haiku 4.5로 리뷰 pros/cons + 감성 태그 + overall_score
+- **대시보드**: Streamlit 4탭 (목록·카드 / 비교 / 상세 / 운영)
+- **운영**: refresh_log + llm_call_log, $1/run 비용 경고, 수동 오버라이드 편집
 
-- Python 3.11+
-- (선택) uv 또는 venv
+---
 
-## 설정
+## Stack
 
+| Layer | Tech |
+|---|---|
+| Language | Python 3.11+ |
+| Storage | SQLite (WAL mode) |
+| Crawler | httpx + BeautifulSoup |
+| Matching | rapidfuzz (fuzzy) + Anthropic Claude (LLM fallback) |
+| LLM | Anthropic Claude Haiku 4.5 + prompt caching |
+| Dashboard | Streamlit + Plotly Scatterpolar |
+| Tests | pytest (169 tests) |
+
+---
+
+## Quick Start (5단계)
+
+### 1. 환경 부트스트랩
 ```bash
-cd workspace
-python3 -m venv .venv
-.venv/bin/python -m pip install -e .
-cp .env.example .env  # ANTHROPIC_API_KEY 등을 채운다
+./scripts/bootstrap.sh
 ```
+venv 생성 + 의존성 설치 + .env 복사 + DB migrate + brand seed. **재실행해도 안전**.
 
-## M0 검증
+### 2. API 키 설정
+`.env` 파일을 열어 `ANTHROPIC_API_KEY=` 자리에 실제 키 입력.
+LLM 기능을 안 쓰면 비워둬도 됩니다 (아래 명령에 `--skip-llm` 추가).
 
+### 3. 첫 크롤 + 정규화
 ```bash
-PYTHONPATH=src .venv/bin/python -m lg_dash.scripts.seed_brands --config-dir config
+source .venv/bin/activate
+python -m lg_dash.pipeline.run \
+  --source danawa --brand lg --category washer \
+  --limit 3 --skip-llm
 ```
+다나와에서 LG 세탁기 3개를 크롤하고 SQLite에 정규화된 스펙으로 저장합니다.
 
-기대 출력:
-
-```
-Applied migrations: 0001_init
-Seeded 3 brand(s), 3 categorie(s).
-  brand:   lg         LG전자
-  brand:   samsung    삼성전자
-  brand:   winia      위니아
-  category: dryer       건조기
-  category: top_loader  통돌이
-  category: washer      세탁기
-```
-
-확인:
-
+### 4. (선택) LLM 분석
 ```bash
-sqlite3 storage/db.sqlite ".tables"
-sqlite3 storage/db.sqlite "SELECT id, display FROM brand;"
+python -m lg_dash.pipeline.llm_analyze --all
 ```
+저장된 리뷰를 요약하고 감성 태그를 추출합니다. 제품당 약 $0.005.
+
+### 5. 대시보드 실행
+```bash
+streamlit run src/lg_dash/app/dashboard.py --server.address 127.0.0.1
+```
+브라우저로 <http://localhost:8501> 접속.
+
+> 외부에서 접근하려면 **SSH 터널** 또는 **nginx + IP allowlist** 사용. [DEPLOY](docs/05-ops/DEPLOY.md) 참조. `0.0.0.0` 바인딩은 절대 금지.
+
+---
 
 ## 디렉터리 구조
 
 ```
 workspace/
-├─ config/                # brands, categories, attr_dictionary, sentiment_tags (YAML)
+├─ README.md                          ← 본 문서 (입구)
+├─ pyproject.toml                     ← 의존성
+├─ .env.example                       ← 환경 변수 템플릿
+├─ scripts/
+│  └─ bootstrap.sh                    ← one-shot 초기화
 ├─ src/lg_dash/
-│   ├─ models.py          # Pydantic 모델
-│   ├─ adapters/          # SourceAdapter 구현 (M1~M3)
-│   ├─ pipeline/          # crawl/normalize/images/llm_analyze (M1~M5)
-│   ├─ storage/           # SQLite db, migrations, repo
-│   ├─ llm/               # Anthropic 클라이언트 + 프롬프트 (M5)
-│   ├─ app/               # Streamlit UI (M6~M7)
-│   └─ scripts/           # seed_brands 등
-├─ tests/                 # 어댑터 계약, 정규화 룰, LLM 스키마
-└─ storage/               # 런타임 산출물 (gitignore: db.sqlite, images/)
+│  ├─ adapters/        ← 4 소스 어댑터 (Protocol 기반)
+│  ├─ pipeline/        ← crawl → normalize → images → llm_analyze → run (오케스트레이터)
+│  ├─ storage/         ← SQLite + migrations
+│  ├─ llm/             ← Anthropic 클라이언트 + 프롬프트
+│  ├─ scripts/         ← seed_brands 등
+│  └─ app/             ← Streamlit 4탭
+├─ tests/                              ← 169 tests
+├─ config/
+│  ├─ brands.yaml                     ← LG, Samsung, Winia
+│  ├─ categories.yaml                 ← 세탁기 / 건조기 / 통돌이
+│  ├─ attr_dictionary.yaml            ← 11 canonical_keys + 시놋
+│  └─ sentiment_tags.yaml             ← 감성 태그 어휘
+├─ storage/                            ← (gitignored)
+│  ├─ db.sqlite                       ← SQLite DB
+│  ├─ images/                         ← 다운로드된 이미지
+│  └─ backups/                        ← 백업
+└─ docs/
+   ├─ 01-plan/features/               ← PDCA Plan 문서
+   ├─ 02-design/features/             ← PDCA Design 문서
+   ├─ 04-report/                      ← PDCA 완성 보고서
+   └─ 05-ops/                         ← 운영 가이드
+      ├─ RUNBOOK.md                   ← 일상 운영, 백업, 트러블슈팅
+      └─ DEPLOY.md                    ← 사내망 노출 패턴
 ```
 
-## 마일스톤
+---
 
-| M | 산출물 | 상태 |
-|---|---|---|
-| M0 | 부트스트랩 — pyproject, 마이그레이션, models, repo, seed | ✅ |
-| M1 | 다나와 어댑터 종단간 | 대기 |
-| M2 | 스펙 정규화 (룰/퍼지) | 대기 |
-| M3 | 나머지 3개 어댑터 (manufacturer/coupang/youtube) | 대기 |
-| M4 | 이미지 수집 | 대기 |
-| M5 | LLM 분석 (요약+감성태그) | 대기 |
-| M6 | Streamlit MVP (목록/카드 + 상세) | 대기 |
-| M7 | 비교 뷰 + 운영 뷰 | 대기 |
-| M8 | LLM 폴백 매칭 + 수동 오버라이드 | 대기 |
+## 주요 명령
+
+| 작업 | 명령 |
+|---|---|
+| 종단간 (crawl+normalize+images+LLM) | `python -m lg_dash.pipeline.run --source danawa --brand lg --category washer --limit 3` |
+| 종단간 (LLM 생략) | `... --skip-llm` |
+| 종단간 (이미지 생략) | `... --skip-images` |
+| 크롤만 | `python -m lg_dash.pipeline.crawl --source danawa --brand lg --category washer --limit 3` |
+| 정규화만 | `python -m lg_dash.pipeline.normalize --all` |
+| 이미지만 | `python -m lg_dash.pipeline.images --all` |
+| LLM 분석만 | `python -m lg_dash.pipeline.llm_analyze --all` |
+| 테스트 | `pytest` (169 tests) |
+| 린트 | `ruff check src tests` |
+
+지원 카테고리: `washer`, `dryer`, `top_loader` · 지원 브랜드 (seed 시점): `lg`, `samsung`, `winia` · 지원 소스: `manufacturer`, `danawa`, `coupang`, `youtube`
+
+---
+
+## 환경 변수
+
+`.env` 파일 (`.gitignore`에 등록, 절대 commit 금지):
+
+| 변수 | 필수 | 기본값 | 설명 |
+|---|:---:|---|---|
+| `ANTHROPIC_API_KEY` | LLM 사용 시 | (empty) | Anthropic API 키. 미설정 시 `--skip-llm` 사용 |
+| `LLM_MODEL` | ❌ | `claude-haiku-4-5` | LLM 모델 ID |
+| `LG_DASH_DB_PATH` | ❌ | `storage/db.sqlite` | SQLite 경로 |
+| `CRAWL_USER_AGENT` | ❌ | `LG_Dash/0.0.1 (+internal-use)` | HTTP User-Agent |
+| `CRAWL_RATE_LIMIT_PER_HOST` | ❌ | `1.0` | 기본 호스트별 최소 지연(초) |
+
+host별 하드코딩 지연 (코드): `search.danawa.com=10s` (robots.txt), `prod.danawa.com=2s`, `www.coupang.com=2s`, `www.youtube.com=2s`.
+
+---
+
+## 더 알아보기
+
+- 일상 운영 (백업·모니터링·트러블슈팅): **[docs/05-ops/RUNBOOK.md](docs/05-ops/RUNBOOK.md)**
+- 사내망 노출 (SSH 터널 / nginx): **[docs/05-ops/DEPLOY.md](docs/05-ops/DEPLOY.md)**
+- 설계 배경 + 완성 보고: [docs/04-report/lg_dash-completion-report.md](docs/04-report/lg_dash-completion-report.md)
+- deploy-guide PDCA 아카이브: [docs/archive/2026-05/deploy-guide/](docs/archive/2026-05/deploy-guide/) (plan + design + analysis + report)
+
+---
+
+## 라이선스
+
+내부 사용 전용. 외부 배포·재공개 금지. 수집 데이터의 원저작권은 각 출처에 있음.

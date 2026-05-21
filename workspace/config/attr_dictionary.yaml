@@ -21,6 +21,7 @@ attributes:
     synonyms:
       - 건조용량
       - 건조 용량
+      - 건조
       - 1회 건조량
       - 건조가능량
       - dry capacity
@@ -62,6 +63,7 @@ attributes:
       - 에너지소비효율
       - 에너지소비효율등급
       - 에너지등급
+      - 에너지
       - 효율등급
       - energy grade
     value_pattern: '([1-5])\s*등급'
@@ -144,5 +146,6 @@ attributes:
       - 가격
       - 최저가
       - 판매가
+      - 출시가
       - price
     value_pattern: '(\d{1,3}(?:,\d{3})+|\d{6,})\s*(?:원|KRW)?'

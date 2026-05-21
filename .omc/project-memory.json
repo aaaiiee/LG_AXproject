@@ -1,0 +1,148 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779367046931,
+  "projectRoot": "/Users/aaaiiee/Downloads/Dev/LG_Project",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "ref_agents": {
+      "path": "ref_agents",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779367046913,
+      "keyFiles": []
+    },
+    "ref_design": {
+      "path": "ref_design",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779367046914,
+      "keyFiles": [
+        "Apple_DESIGN.md",
+        "Notion_DESIGN.md"
+      ]
+    },
+    "workspace": {
+      "path": "workspace",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1779367046915,
+      "keyFiles": [
+        "README.md",
+        "pyproject.toml"
+      ]
+    },
+    "workspace/config": {
+      "path": "workspace/config",
+      "purpose": "Configuration files",
+      "fileCount": 4,
+      "lastAccessed": 1779367046916,
+      "keyFiles": [
+        "attr_dictionary.yaml",
+        "brands.yaml",
+        "categories.yaml"
+      ]
+    },
+    "workspace/docs": {
+      "path": "workspace/docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1779367046916,
+      "keyFiles": []
+    },
+    "workspace/scripts": {
+      "path": "workspace/scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 0,
+      "lastAccessed": 1779367046917,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "workspace/tests/test_normalize_rules.py",
+      "accessCount": 3,
+      "lastAccessed": 1779367687041,
+      "type": "file"
+    },
+    {
+      "path": "workspace/src/lg_dash/pipeline/normalize.py",
+      "accessCount": 3,
+      "lastAccessed": 1779367911071,
+      "type": "file"
+    },
+    {
+      "path": "workspace/.env.example",
+      "accessCount": 3,
+      "lastAccessed": 1779380012717,
+      "type": "file"
+    },
+    {
+      "path": "workspace/docs/02-design/features/deploy-guide.design.md",
+      "accessCount": 2,
+      "lastAccessed": 1779378978854,
+      "type": "file"
+    },
+    {
+      "path": "workspace/docs/01-plan/features/deploy-guide.plan.md",
+      "accessCount": 1,
+      "lastAccessed": 1779378979713,
+      "type": "file"
+    },
+    {
+      "path": "workspace/scripts/bootstrap.sh",
+      "accessCount": 1,
+      "lastAccessed": 1779378985161,
+      "type": "file"
+    },
+    {
+      "path": "workspace/docs/05-ops/RUNBOOK.md",
+      "accessCount": 1,
+      "lastAccessed": 1779378986089,
+      "type": "file"
+    },
+    {
+      "path": "workspace/docs/05-ops/DEPLOY.md",
+      "accessCount": 1,
+      "lastAccessed": 1779378986635,
+      "type": "file"
+    },
+    {
+      "path": "workspace/README.md",
+      "accessCount": 1,
+      "lastAccessed": 1779378987665,
+      "type": "file"
+    },
+    {
+      "path": "workspace/docs/03-analysis/deploy-guide.analysis.md",
+      "accessCount": 1,
+      "lastAccessed": 1779379096504,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

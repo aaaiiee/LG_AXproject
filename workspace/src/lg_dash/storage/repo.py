@@ -289,6 +289,25 @@ def save_llm_call_log(
     )
 
 
+def cost_per_run(conn: sqlite3.Connection, *, limit: int = 20) -> list[dict]:
+    rows = conn.execute(
+        """
+        SELECT r.run_id, r.started_at, r.finished_at, r.status,
+               COALESCE(SUM(l.cost_usd), 0.0) AS cost_usd,
+               COUNT(l.id) AS calls
+        FROM refresh_log r
+        LEFT JOIN llm_call_log l
+          ON l.created_at >= r.started_at
+         AND (r.finished_at IS NULL OR l.created_at <= r.finished_at)
+        GROUP BY r.run_id
+        ORDER BY r.started_at DESC
+        LIMIT ?
+        """,
+        (limit,),
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
 def save_product_image(
     conn: sqlite3.Connection,
     *,

@@ -101,6 +101,31 @@ def _render_llm_log(conn) -> None:
             hide_index=True,
         )
 
+    runs = repo.cost_per_run(conn)
+    if runs:
+        st.caption("Run별 비용 (최근 20건)")
+        over_threshold = [r for r in runs if r["cost_usd"] > 1.0]
+        if over_threshold:
+            st.warning(
+                f"⚠️ 단일 새로고침 비용이 $1를 초과한 run {len(over_threshold)}건. "
+                "범위를 줄이거나 LLM 폴백을 제한하세요."
+            )
+        st.dataframe(
+            [
+                {
+                    "run_id": r["run_id"],
+                    "started": r["started_at"],
+                    "finished": r["finished_at"] or "—",
+                    "status": r["status"],
+                    "cost_usd": round(r["cost_usd"], 4),
+                    "calls": r["calls"],
+                }
+                for r in runs
+            ],
+            use_container_width=True,
+            hide_index=True,
+        )
+
     recent = conn.execute(
         """
         SELECT id, created_at, product_id, model, purpose,
@@ -112,7 +137,7 @@ def _render_llm_log(conn) -> None:
         """
     ).fetchall()
     if recent:
-        st.caption("최근 20건")
+        st.caption("최근 호출 20건")
         st.dataframe(
             [dict(r) for r in recent],
             use_container_width=True,

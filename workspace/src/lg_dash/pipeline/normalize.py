@@ -21,7 +21,7 @@ from lg_dash.models import (
     SpecPayload,
 )
 from lg_dash.storage import repo
-from lg_dash.storage.db import connect, db_path
+from lg_dash.storage.db import connect, db_path, migrate
 
 __all__ = [
     "NormalizedFact",
@@ -284,6 +284,7 @@ def normalize_and_persist(
     product_id: int,
     normalizer: Normalizer,
 ) -> dict[str, int]:
+    migrate(conn)
     row = conn.execute(
         "SELECT category_id FROM product WHERE id = ?", (product_id,)
     ).fetchone()

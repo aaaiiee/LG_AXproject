@@ -64,8 +64,10 @@ class TestRuleMatching:
             ("작동소음", "50dB", "noise_db", 50.0, "dB"),
             ("에너지소비효율등급", "1등급", "energy_grade", 1.0, "class"),
             ("에너지등급", "2등급", "energy_grade", 2.0, "class"),
+            ("에너지", "1등급", "energy_grade", 1.0, "class"),
             ("소비전력", "2,200W", "power_consumption_w", 2200.0, "W"),
             ("가격", "1,290,000원", "price_krw", 1290000.0, "krw"),
+            ("출시가", "1,100,000원", "price_krw", 1100000.0, "krw"),
         ],
     )
     def test_extracts_number_value_via_regex(
@@ -163,6 +165,15 @@ class TestCategoryFiltering:
             _payload({"탈수속도": "1400 RPM"}), CategoryId.DRYER
         )
         assert _find(facts, "spin_rpm") is None
+
+    def test_short_label_건조_matches_dry_capacity_for_dryer(
+        self, normalizer: Normalizer
+    ) -> None:
+        facts = normalizer.normalize(_payload({"건조": "18kg"}), CategoryId.DRYER)
+        fact = _find(facts, "dry_capacity_kg")
+        assert fact is not None
+        assert fact.value_num == 18.0
+        assert fact.matched_by == MatchedBy.RULE
 
 
 class TestBatchNormalization:

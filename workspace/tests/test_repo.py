@@ -537,3 +537,52 @@ class TestRefreshLog:
         assert row["status"] == "success"
         assert row["items_processed"] == 3
         assert row["finished_at"] is not None
+
+
+class TestCostPerRun:
+    def test_aggregates_llm_calls_within_run_window(self, conn) -> None:
+        run_id = repo.start_refresh(
+            conn, brands=["lg"], categories=[CategoryId.WASHER]
+        )
+        for cost in (0.30, 0.50, 0.40):
+            repo.save_llm_call_log(
+                conn,
+                product_id=None,
+                purpose="review_summary",
+                model="claude-haiku-4-5",
+                input_tokens=100,
+                output_tokens=50,
+                cost_usd=cost,
+                latency_ms=100,
+                cache_hit=False,
+            )
+        repo.finalize_refresh(conn, run_id, status="success", items_processed=3)
+
+        rows = repo.cost_per_run(conn)
+        assert len(rows) == 1
+        row = rows[0]
+        assert row["run_id"] == run_id
+        assert row["cost_usd"] == pytest.approx(1.20)
+        assert row["calls"] == 3
+
+    def test_in_progress_run_includes_calls_so_far(self, conn) -> None:
+        run_id = repo.start_refresh(
+            conn, brands=["lg"], categories=[CategoryId.WASHER]
+        )
+        repo.save_llm_call_log(
+            conn,
+            product_id=None,
+            purpose="review_summary",
+            model="claude-haiku-4-5",
+            input_tokens=100,
+            output_tokens=50,
+            cost_usd=0.75,
+            latency_ms=80,
+            cache_hit=False,
+        )
+
+        rows = repo.cost_per_run(conn)
+        assert len(rows) == 1
+        assert rows[0]["run_id"] == run_id
+        assert rows[0]["cost_usd"] == pytest.approx(0.75)
+        assert rows[0]["finished_at"] is None

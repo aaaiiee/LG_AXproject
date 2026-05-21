@@ -1,0 +1,89 @@
+{
+  "updatedAt": "2026-05-21T16:15:42.114Z",
+  "missions": [
+    {
+      "id": "session:2ba54cdb-c2ee-4c9e-a36f-e878c184801e:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-05-21T12:53:10.511Z",
+      "updatedAt": "2026-05-21T16:15:42.114Z",
+      "status": "done",
+      "workerCount": 3,
+      "taskCounts": {
+        "total": 3,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 0,
+        "completed": 3,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "bkit:gap-detector:a0b671f",
+          "role": "bkit:gap-detector",
+          "ownership": "a0b671ff0929e87b0",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-05-21T12:54:29.810Z"
+        },
+        {
+          "name": "bkit:report-generator:a7a5ef7",
+          "role": "bkit:report-generator",
+          "ownership": "a7a5ef7a0cd1c683c",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-05-21T15:38:40.136Z"
+        },
+        {
+          "name": "bkit:report-generator:a753716",
+          "role": "bkit:report-generator",
+          "ownership": "a7537165b9deb5cb4",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-05-21T16:15:42.114Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-start:a7a5ef7a0cd1c683c:2026-05-21T15:36:57.292Z",
+          "at": "2026-05-21T15:36:57.292Z",
+          "kind": "update",
+          "agent": "bkit:report-generator:a7a5ef7",
+          "detail": "started bkit:report-generator:a7a5ef7",
+          "sourceKey": "session-start:a7a5ef7a0cd1c683c"
+        },
+        {
+          "id": "session-stop:a7a5ef7a0cd1c683c:2026-05-21T15:38:40.136Z",
+          "at": "2026-05-21T15:38:40.136Z",
+          "kind": "completion",
+          "agent": "bkit:report-generator:a7a5ef7",
+          "detail": "completed",
+          "sourceKey": "session-stop:a7a5ef7a0cd1c683c"
+        },
+        {
+          "id": "session-start:a7537165b9deb5cb4:2026-05-21T16:14:21.373Z",
+          "at": "2026-05-21T16:14:21.373Z",
+          "kind": "update",
+          "agent": "bkit:report-generator:a753716",
+          "detail": "started bkit:report-generator:a753716",
+          "sourceKey": "session-start:a7537165b9deb5cb4"
+        },
+        {
+          "id": "session-stop:a7537165b9deb5cb4:2026-05-21T16:15:42.114Z",
+          "at": "2026-05-21T16:15:42.114Z",
+          "kind": "completion",
+          "agent": "bkit:report-generator:a753716",
+          "detail": "completed",
+          "sourceKey": "session-stop:a7537165b9deb5cb4"
+        }
+      ]
+    }
+  ]
+}

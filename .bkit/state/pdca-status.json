@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-05-20T14:59:58.409Z",
+  "lastUpdated": "2026-05-21T15:50:00.042Z",
   "activeFeatures": [
     "lg_dash",
     "storage",
@@ -21,7 +21,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-05-20T11:51:10.288Z",
-        "lastUpdated": "2026-05-20T14:56:07.733Z"
+        "lastUpdated": "2026-05-21T15:35:24.309Z"
       },
       "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/src/lg_dash/app/views/ops_view.py"
     },
@@ -34,7 +34,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-05-20T11:51:14.836Z",
-        "lastUpdated": "2026-05-20T14:52:39.439Z"
+        "lastUpdated": "2026-05-21T15:34:38.906Z"
       },
       "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/src/lg_dash/storage/repo.py"
     },
@@ -47,9 +47,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-05-20T11:53:42.392Z",
-        "lastUpdated": "2026-05-20T11:53:42.392Z"
+        "lastUpdated": "2026-05-21T15:50:00.042Z"
       },
-      "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/src/lg_dash/scripts/seed_brands.py"
+      "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/scripts/bootstrap.sh"
     },
     "tests": {
       "phase": "do",
@@ -60,9 +60,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-05-20T11:58:59.856Z",
-        "lastUpdated": "2026-05-20T14:56:53.928Z"
+        "lastUpdated": "2026-05-21T15:15:42.298Z"
       },
-      "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/tests/test_normalize_llm_fallback.py"
+      "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/tests/test_repo.py"
     },
     "adapters": {
       "phase": "do",
@@ -86,9 +86,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-05-20T12:24:06.145Z",
-        "lastUpdated": "2026-05-20T14:59:58.409Z"
+        "lastUpdated": "2026-05-21T15:14:23.011Z"
       },
-      "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/src/lg_dash/pipeline/normalize.py"
+      "lastFile": "/Users/aaaiiee/Downloads/Dev/LG_Project/workspace/src/lg_dash/pipeline/run.py"
     },
     "llm": {
       "phase": "do",
@@ -112,7 +112,7 @@
   "session": {
     "startedAt": "2026-05-20T11:08:38.558Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-05-20T14:59:58.409Z"
+    "lastActivity": "2026-05-21T15:50:00.042Z"
   },
   "history": [
     {
@@ -694,6 +694,72 @@
     {
       "timestamp": "2026-05-20T14:59:58.409Z",
       "feature": "pipeline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T12:47:50.416Z",
+      "feature": "tests",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T12:48:00.893Z",
+      "feature": "tests",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T12:50:34.320Z",
+      "feature": "tests",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T12:51:38.679Z",
+      "feature": "pipeline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T12:51:49.206Z",
+      "feature": "pipeline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T15:13:45.573Z",
+      "feature": "tests",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T15:14:23.011Z",
+      "feature": "pipeline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T15:15:42.298Z",
+      "feature": "tests",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T15:34:38.906Z",
+      "feature": "storage",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T15:35:24.309Z",
+      "feature": "lg_dash",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-21T15:50:00.042Z",
+      "feature": "scripts",
       "phase": "do",
       "action": "updated"
     }

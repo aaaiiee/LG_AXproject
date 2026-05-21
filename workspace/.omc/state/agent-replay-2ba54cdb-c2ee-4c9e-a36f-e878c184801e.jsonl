@@ -1,0 +1,6 @@
+{"t":0,"agent":"a0b671f","agent_type":"bkit:gap-detector","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a0b671f","agent_type":"bkit:gap-detector","event":"agent_stop","success":true,"duration_ms":79299}
+{"t":0,"agent":"a7a5ef7","agent_type":"bkit:report-generator","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a7a5ef7","agent_type":"bkit:report-generator","event":"agent_stop","success":true,"duration_ms":102844}
+{"t":0,"agent":"a753716","agent_type":"bkit:report-generator","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a753716","agent_type":"bkit:report-generator","event":"agent_stop","success":true,"duration_ms":80741}

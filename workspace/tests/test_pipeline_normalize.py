@@ -197,3 +197,31 @@ class TestNormalizeRespectsManualOverride:
             assert row["matched_by"] == "rule"
         finally:
             conn.close()
+
+
+class TestNormalizeAutoMigrates:
+    def test_normalize_and_persist_auto_applies_pending_migrations(
+        self, crawled_db: Path, normalizer: Normalizer
+    ) -> None:
+        conn = connect(crawled_db)
+        conn.execute("DROP TABLE IF EXISTS manual_override")
+        conn.execute(
+            "DELETE FROM schema_migrations WHERE version='0002_manual_override'"
+        )
+        conn.close()
+
+        conn = connect(crawled_db)
+        try:
+            summary = normalize_and_persist(
+                conn, product_id=1, normalizer=normalizer
+            )
+            assert summary.get("danawa", 0) > 0
+            versions = {
+                r["version"]
+                for r in conn.execute(
+                    "SELECT version FROM schema_migrations"
+                ).fetchall()
+            }
+            assert "0002_manual_override" in versions
+        finally:
+            conn.close()
